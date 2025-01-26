@@ -6,3 +6,6 @@
   background-color: tomato;
   color: #fff;
 }
+.border{
+  border: 2px solid #f00;
+}
