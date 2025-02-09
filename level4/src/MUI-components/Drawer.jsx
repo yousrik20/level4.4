@@ -1,6 +1,3 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Toolbar from "@mui/material/Toolbar";
 import {
   Button,
   Divider,
@@ -13,8 +10,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/Inbox";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Brightness4,
   Brightness7,
@@ -28,6 +24,8 @@ import {
 export default function Drawerr({ drawerWidth, setMyMode }) {
   const navigate = useNavigate();
   const theme = useTheme();
+  const currentLocation=useLocation();
+  console.log(currentLocation.pathname);
   return (
     <Drawer
       sx={{
@@ -47,7 +45,10 @@ export default function Drawerr({ drawerWidth, setMyMode }) {
         <ListItem sx={{ display: "flex", justifyContent: "center" }}>
           <IconButton
             onClick={() => {
-              localStorage.setItem("currentMode",theme.palette.mode === 'light' ? 'dark' : 'light');
+              localStorage.setItem(
+                "currentMode",
+                theme.palette.mode === "light" ? "dark" : "light"
+              );
               setMyMode(theme.palette.mode === "light" ? "dark" : "light");
             }}
             color="inherit"
@@ -62,7 +63,7 @@ export default function Drawerr({ drawerWidth, setMyMode }) {
 
         <Divider />
 
-        <ListItem disablePadding>
+        <ListItem sx={{bgcolor:currentLocation.pathname === '/' ?  theme.palette.favColor.main : null}} disablePadding>
           <ListItemButton
             onClick={() => {
               navigate("/");
@@ -75,7 +76,7 @@ export default function Drawerr({ drawerWidth, setMyMode }) {
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding>
+        <ListItem disablePadding sx={{bgcolor:currentLocation.pathname === '/create' ?  theme.palette.favColor.main : null}}>
           <ListItemButton
             onClick={() => {
               navigate("/create");

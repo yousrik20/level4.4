@@ -7,6 +7,8 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import { cyan, pink } from "@mui/material/colors";
+import { createTheme } from "@mui/material";
 
 
 const router = createBrowserRouter(
