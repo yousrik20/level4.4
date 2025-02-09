@@ -12,18 +12,20 @@ import {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
-      <Route index element={<Home/>}/>
-      <Route path="create" element={<Create/>}/>
+      <Route index element={<Home />} />
+      <Route path="create" element={<Create />} />
     </Route>
   )
 );
+
+
 function App() {
- 
+
   return (
-    <>
-  <RouterProvider router={router} />
-    </>
-  )
+   
+    
+      <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;

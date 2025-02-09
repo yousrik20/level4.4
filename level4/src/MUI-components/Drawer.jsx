@@ -1,17 +1,33 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
-import { Divider, Drawer ,List } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  useTheme,
+} from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/Inbox";
 import { useNavigate } from "react-router-dom";
-import { Create, Home, Logout, Person2, Settings } from "@mui/icons-material";
+import {
+  Brightness4,
+  Brightness7,
+  Create,
+  Home,
+  Logout,
+  Person2,
+  Settings,
+} from "@mui/icons-material";
 
-export default function Drawerr({ drawerWidth }) {
-  const navigate=useNavigate();
+export default function Drawerr({ drawerWidth, setMyMode }) {
+  const navigate = useNavigate();
+  const theme = useTheme();
   return (
     <Drawer
       sx={{
@@ -25,29 +41,47 @@ export default function Drawerr({ drawerWidth }) {
       variant="permanent"
       anchor="left"
     >
-      <Toolbar />
-      <Divider />
-      <List>
+      {/* <Button onClick={() => { setMyMode(theme.palette.mode === 'light' ? 'dark' : 'light') }} variant="contained" color="warning">Dark</Button> */}
 
+      <List>
+        <ListItem sx={{display:'flex',justifyContent:"center"}}>
+        <IconButton
+          onClick={() => {
+            setMyMode(theme.palette.mode === "light" ? "dark" : "light");
+          }}
+          color="inherit"
+        >
+          {theme.palette.mode === "dark" ? (
+            <Brightness7 sx={{ color: "orange" }} />
+          ) : (
+            <Brightness4 />
+          )}
+        </IconButton>
+        </ListItem>
         
-        
+        <Divider />
+
         <ListItem disablePadding>
-          <ListItemButton onClick={()=>{
-            navigate("/")
-          }}>
+          <ListItemButton
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <ListItemIcon>
               <Home />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
-        
+
         <ListItem disablePadding>
-          <ListItemButton onClick={()=>{
-            navigate("/create")
-          }}>
+          <ListItemButton
+            onClick={() => {
+              navigate("/create");
+            }}
+          >
             <ListItemIcon>
-              <Create/>
+              <Create />
             </ListItemIcon>
             <ListItemText primary="Create" />
           </ListItemButton>
@@ -55,7 +89,7 @@ export default function Drawerr({ drawerWidth }) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Person2/>
+              <Person2 />
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItemButton>
@@ -63,7 +97,7 @@ export default function Drawerr({ drawerWidth }) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Settings/>
+              <Settings />
             </ListItemIcon>
             <ListItemText primary="Settings" />
           </ListItemButton>
@@ -71,7 +105,7 @@ export default function Drawerr({ drawerWidth }) {
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Logout/>
+              <Logout />
             </ListItemIcon>
             <ListItemText primary="Logout" />
           </ListItemButton>
