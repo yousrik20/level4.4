@@ -44,21 +44,22 @@ export default function Drawerr({ drawerWidth, setMyMode }) {
       {/* <Button onClick={() => { setMyMode(theme.palette.mode === 'light' ? 'dark' : 'light') }} variant="contained" color="warning">Dark</Button> */}
 
       <List>
-        <ListItem sx={{display:'flex',justifyContent:"center"}}>
-        <IconButton
-          onClick={() => {
-            setMyMode(theme.palette.mode === "light" ? "dark" : "light");
-          }}
-          color="inherit"
-        >
-          {theme.palette.mode === "dark" ? (
-            <Brightness7 sx={{ color: "orange" }} />
-          ) : (
-            <Brightness4 />
-          )}
-        </IconButton>
+        <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+          <IconButton
+            onClick={() => {
+              localStorage.setItem("currentMode",theme.palette.mode === 'light' ? 'dark' : 'light');
+              setMyMode(theme.palette.mode === "light" ? "dark" : "light");
+            }}
+            color="inherit"
+          >
+            {theme.palette.mode === "dark" ? (
+              <Brightness7 sx={{ color: "orange" }} />
+            ) : (
+              <Brightness4 />
+            )}
+          </IconButton>
         </ListItem>
-        
+
         <Divider />
 
         <ListItem disablePadding>
