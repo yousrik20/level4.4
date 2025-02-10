@@ -9,6 +9,7 @@ import { grey,teal } from "@mui/material/colors";
 
 const drawerWidth = 240;
 export default function Root() {
+
   const [mode, setMyMode] = useState(
         localStorage.getItem("currentMode") === null
       ? "light"
@@ -40,16 +41,27 @@ export default function Root() {
       )
     },
   });
+  const [noneOrBlock,setNoneOrBlock]=useState('none');
+  const [drawerType,setDrawerType]=useState('permanent');
+  const showDrawer = () => { 
+    setDrawerType("temporary");
+    setNoneOrBlock("block"); 
+   }
+  const hideDrawer=()=>{
+    setNoneOrBlock('none');
+    setDrawerType('permanent');
+  }
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div>
-        <Appbar drawerWidth={drawerWidth} />
-        <Drawerr drawerWidth={drawerWidth} setMyMode={setMyMode} />
-        <Box
+        <Appbar drawerWidth={drawerWidth}  showDrawer={showDrawer}/>
+        <Drawerr drawerWidth={drawerWidth} setMyMode={setMyMode} noneOrBlock={noneOrBlock}  drawerType={drawerType} hideDrawer={hideDrawer}/>
+        <Box 
+        // className="border"
           component="main"
           sx={{
-            ml: `${drawerWidth}px`,
+            ml: {sm:`${drawerWidth}px`},
             display: "flex",
             justifyContent: "center",
             mt: "66px",

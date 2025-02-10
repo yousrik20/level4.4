@@ -21,7 +21,7 @@ import {
   Settings,
 } from "@mui/icons-material";
 
-export default function Drawerr({ drawerWidth, setMyMode }) {
+export default function Drawerr({ drawerWidth, setMyMode,noneOrBlock,drawerType,hideDrawer }) {
   const navigate = useNavigate();
   const theme = useTheme();
   const currentLocation=useLocation();
@@ -29,6 +29,7 @@ export default function Drawerr({ drawerWidth, setMyMode }) {
   return (
     <Drawer
       sx={{
+        display:{ xs:noneOrBlock,sm:'block'},
         width: `${drawerWidth}px`,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
@@ -36,8 +37,12 @@ export default function Drawerr({ drawerWidth, setMyMode }) {
           boxSizing: "border-box",
         },
       }}
-      variant="permanent"
+      variant={drawerType}
       anchor="left"
+      open={true}
+      onClose={()=>{
+        hideDrawer()
+      }}
     >
       {/* <Button onClick={() => { setMyMode(theme.palette.mode === 'light' ? 'dark' : 'light') }} variant="contained" color="warning">Dark</Button> */}
 
