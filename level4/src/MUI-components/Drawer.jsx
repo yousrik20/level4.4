@@ -26,6 +26,7 @@ export default function Drawerr({ drawerWidth, setMyMode,noneOrBlock,drawerType,
   const theme = useTheme();
   const currentLocation=useLocation();
   console.log(currentLocation.pathname);
+
   return (
     <Drawer
       sx={{
