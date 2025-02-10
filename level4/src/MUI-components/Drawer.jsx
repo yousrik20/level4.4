@@ -26,7 +26,12 @@ export default function Drawerr({ drawerWidth, setMyMode,noneOrBlock,drawerType,
   const theme = useTheme();
   const currentLocation=useLocation();
   console.log(currentLocation.pathname);
-
+  const myList=[
+    {text:"Home",icon:<Home/>,path:'/'},
+    {text:"Create",icon:<Create/>,path:'/create'},
+    {text:"Profile",icon:<Person2/>,path:'/profile'},
+    {text:"Settings",icon:<Settings/>,path:'/settings'},
+  ]
   return (
     <Drawer
       sx={{
@@ -68,48 +73,29 @@ export default function Drawerr({ drawerWidth, setMyMode,noneOrBlock,drawerType,
         </ListItem>
 
         <Divider />
+        {myList.map((item)=>{
+          return(
+            <ListItem sx={{bgcolor:currentLocation.pathname === item.path ?  theme.palette.
+// @ts-ignore
+            favColor.main : null}} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                navigate(item.path);
+              }}
+            >
+              <ListItemIcon>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+          )
+        })}
 
-        <ListItem sx={{bgcolor:currentLocation.pathname === '/' ?  theme.palette.favColor.main : null}} disablePadding>
-          <ListItemButton
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
 
-        <ListItem disablePadding sx={{bgcolor:currentLocation.pathname === '/create' ?  theme.palette.favColor.main : null}}>
-          <ListItemButton
-            onClick={() => {
-              navigate("/create");
-            }}
-          >
-            <ListItemIcon>
-              <Create />
-            </ListItemIcon>
-            <ListItemText primary="Create" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Person2 />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
+
+        
+        {/* logout */}
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
