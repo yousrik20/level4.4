@@ -75,7 +75,7 @@ export default function Drawerr({ drawerWidth, setMyMode,noneOrBlock,drawerType,
         <Divider />
         {myList.map((item)=>{
           return(
-            <ListItem sx={{bgcolor:currentLocation.pathname === item.path ?  theme.palette.
+            <ListItem  key={item.text} sx={{bgcolor:currentLocation.pathname === item.path ?  theme.palette.
 // @ts-ignore
             favColor.main : null}} disablePadding>
             <ListItemButton

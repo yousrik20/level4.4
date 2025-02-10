@@ -3,6 +3,7 @@ import "./Create.css";
 import React, { useState } from "react";
 import { purple } from "@mui/material/colors";
 import { ChevronRight } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -14,6 +15,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function Create() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
+  const navigate=useNavigate();
   return (
     <Box component="form" sx={{ width: "380px" }}>
       <TextField
@@ -55,7 +57,10 @@ export default function Create() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ price, title }),
-          });
+
+          }).then(()=>{
+            navigate('/')
+          })
         }}
         sx={{ mt: "22px" }}
         variant="contained"
