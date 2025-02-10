@@ -1,22 +1,27 @@
 import { Box, Button, InputAdornment, styled, TextField } from "@mui/material";
 import "./Create.css";
-import React from "react";
+import React, { useState } from "react";
 import { purple } from "@mui/material/colors";
 import { ChevronRight } from "@mui/icons-material";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
   backgroundColor: purple[500],
-  '&:hover': {
+  "&:hover": {
     backgroundColor: purple[700],
   },
 }));
 export default function Create() {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState(0);
   return (
     <Box component="form" sx={{ width: "380px" }}>
       <TextField
+        onChange={(eo) => {
+          setTitle(eo.target.value);
+        }}
         fullWidth
-        label="Transaction Title"
+        label=" Transaction Title"
         sx={{ mt: "22px", display: "block" }}
         slotProps={{
           input: {
@@ -28,8 +33,11 @@ export default function Create() {
         variant="filled"
       />
       <TextField
+        onChange={(eo) => {
+          setPrice(Number(eo.target.value));
+        }}
         fullWidth
-        label="Transaction Amount"
+        label=" Transaction Amount"
         id="filled-start-adornment"
         sx={{ mt: "22px", display: "block" }}
         slotProps={{
@@ -39,7 +47,21 @@ export default function Create() {
         }}
         variant="filled"
       />
-       <ColorButton sx={{mt:'22px'}} variant="contained">Submit <ChevronRight/></ColorButton>
+      <ColorButton
+        onClick={() => {
+          fetch("http://localhost:3100/mydata", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ price, title }),
+          });
+        }}
+        sx={{ mt: "22px" }}
+        variant="contained"
+      >
+        Submit <ChevronRight />
+      </ColorButton>
     </Box>
   );
 }

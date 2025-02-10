@@ -19,7 +19,7 @@ export default function Appbar({ drawerWidth, showDrawer }) {
           onClick={() => {
             showDrawer();
           }}
-          sx={{ mr:"9px", display: { sm: "none" } }}
+          sx={{ mr:"9px", display: { sm: "none" } ,color:'inherit'}}
         >
           <Menu />
         </IconButton>
