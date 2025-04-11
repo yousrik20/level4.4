@@ -9,8 +9,19 @@ export default function Home() {
     fetch("http://localhost:3100/mydata")
       .then((response) => response.json())
       .then((data) => setMyData(data));
-  }, [myData]);
+  }, []);
+  const handleDelete =(item)=>{
+    fetch(`http://localhost:3100/mydata/${item.id}`,{
+      method:'DELETE'
+    })
+
+    const newArr=myData.filter((myObject)=>{
+      return myObject.id !==  item.id
+    })
+    setMyData(newArr);
+  }
   let totalPrice=0;
+
   return (
     <Box>
       {myData.map((item)=>{
@@ -44,9 +55,7 @@ export default function Home() {
         </Typography>
         <IconButton 
           onClick={()=>{
-            fetch(`http://localhost:3100/mydata/${item.id}`,{
-              method:'DELETE'
-            })
+            handleDelete(item)
           }}
           aria-label=""
           sx={{ position: "absolute", top: "0px", right: "0px" }}
@@ -59,7 +68,7 @@ export default function Home() {
 
 
 
-      <Typography variant="h6" sx={{textAlign:'center',mt:'55px'}}>👉 You Spend ${totalPrice}</Typography>
+      <Typography variant="h6" sx={{textAlign:'center',mt:'55px'}}>👉 You Spend $ {totalPrice}</Typography>
     </Box>
   );
 }
