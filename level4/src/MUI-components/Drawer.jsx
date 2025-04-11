@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   Drawer,
@@ -33,78 +34,81 @@ export default function Drawerr({ drawerWidth, setMyMode,noneOrBlock,drawerType,
     {text:"Settings",icon:<Settings/>,path:'/settings'},
   ]
   return (
+    <Box component='nav'>
     <Drawer
-      sx={{
-        display:{ xs:noneOrBlock,sm:'block'},
-        width: `${drawerWidth}px`,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-        },
-      }}
-      variant={drawerType}
-      anchor="left"
-      open={true}
-      onClose={()=>{
-        hideDrawer()
-      }}
-    >
-      {/* <Button onClick={() => { setMyMode(theme.palette.mode === 'light' ? 'dark' : 'light') }} variant="contained" color="warning">Dark</Button> */}
+          sx={{
+            display:{ xs:noneOrBlock,sm:'block'},
+            width: `${drawerWidth}px`,
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          variant={drawerType}
+          anchor="left"
+          open={true}
+          onClose={()=>{
+            hideDrawer()
+          }}
+        >
+          {/* <Button onClick={() => { setMyMode(theme.palette.mode === 'light' ? 'dark' : 'light') }} variant="contained" color="warning">Dark</Button> */}
 
-      <List>
-        <ListItem sx={{ display: "flex", justifyContent: "center" }}>
-          <IconButton
-            onClick={() => {
-              localStorage.setItem(
-                "currentMode",
-                theme.palette.mode === "light" ? "dark" : "light"
-              );
-              setMyMode(theme.palette.mode === "light" ? "dark" : "light");
-            }}
-            color="inherit"
-          >
-            {theme.palette.mode === "dark" ? (
-              <Brightness7 sx={{ color: "orange" }} />
-            ) : (
-              <Brightness4 />
-            )}
-          </IconButton>
-        </ListItem>
+          <List>
+            <ListItem sx={{ display: "flex", justifyContent: "center" }}>
+              <IconButton
+                onClick={() => {
+                  localStorage.setItem(
+                    "currentMode",
+                    theme.palette.mode === "light" ? "dark" : "light"
+                  );
+                  setMyMode(theme.palette.mode === "light" ? "dark" : "light");
+                }}
+                color="inherit"
+              >
+                {theme.palette.mode === "dark" ? (
+                  <Brightness7 sx={{ color: "orange" }} />
+                ) : (
+                  <Brightness4 />
+                )}
+              </IconButton>
+            </ListItem>
 
-        <Divider />
-        {myList.map((item)=>{
-          return(
-            <ListItem  key={item.text} sx={{bgcolor:currentLocation.pathname === item.path ?  theme.palette.
-// @ts-ignore
-            favColor.main : null}} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                navigate(item.path);
-              }}
-            >
-              <ListItemIcon>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-          )
-        })}
+            <Divider />
+            {myList.map((item)=>{
+              return(
+                <ListItem  key={item.text} sx={{bgcolor:currentLocation.pathname === item.path ?  theme.palette.
+    // @ts-ignore
+                favColor.main : null}} disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(item.path);
+                  }}
+                >
+                  <ListItemIcon>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </ListItem>
+              )
+            })}
 
 
 
-        
-        {/* logout */}
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <Logout />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Drawer>
+            
+            {/* logout */}
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Logout />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>
+    </Box>
+    
   );
 }
