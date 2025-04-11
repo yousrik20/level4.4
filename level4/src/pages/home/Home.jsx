@@ -9,10 +9,12 @@ export default function Home() {
     fetch("http://localhost:3100/mydata")
       .then((response) => response.json())
       .then((data) => setMyData(data));
-  }, []);
+  }, [myData]);
+  let totalPrice=0;
   return (
     <Box>
       {myData.map((item)=>{
+        totalPrice+=item.price;
         return(
 <Paper 
         key={item.id}
@@ -40,7 +42,12 @@ export default function Home() {
         >
           ${item.price}
         </Typography>
-        <IconButton
+        <IconButton 
+          onClick={()=>{
+            fetch(`http://localhost:3100/mydata/${item.id}`,{
+              method:'DELETE'
+            })
+          }}
           aria-label=""
           sx={{ position: "absolute", top: "0px", right: "0px" }}
         >
@@ -49,7 +56,10 @@ export default function Home() {
       </Paper>
         )
       })}
-      
+
+
+
+      <Typography variant="h6" sx={{textAlign:'center',mt:'55px'}}>👉 You Spend ${totalPrice}</Typography>
     </Box>
   );
 }

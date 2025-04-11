@@ -17,7 +17,7 @@ export default function Create() {
   const [price, setPrice] = useState(0);
   const navigate=useNavigate();
   return (
-    <Box component="form" sx={{ width: "380px" }}>
+    <Box noValidate autoComplete="off" component="form" sx={{ width: "380px" }}>
       <TextField
         onChange={(eo) => {
           setTitle(eo.target.value);
