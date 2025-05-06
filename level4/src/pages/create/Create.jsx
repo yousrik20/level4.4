@@ -14,11 +14,16 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 export default function Create() {
   const [title, setTitle] = useState("");
+  const [titleError, setTitleError] = useState(false);
+
   const [price, setPrice] = useState(0);
+  const [priceError, setPriceError] = useState(false);
+  
   const navigate=useNavigate();
   return (
     <Box noValidate autoComplete="off" component="form" sx={{ width: "380px" }}>
       <TextField
+      error={titleError}
         onChange={(eo) => {
           setTitle(eo.target.value);
         }}
@@ -35,6 +40,7 @@ export default function Create() {
         variant="filled"
       />
       <TextField
+      error={priceError}
         onChange={(eo) => {
           setPrice(Number(eo.target.value));
         }}
@@ -48,19 +54,31 @@ export default function Create() {
           },
         }}
         variant="filled"
+        type="number"
       />
       <ColorButton
         onClick={() => {
-          fetch("http://localhost:3100/mydata", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ price, title }),
-
-          }).then(()=>{
-            navigate('/')
-          })
+          setTitleError(true);
+          setPriceError(true);
+          if(title){
+            setTitleError(false);
+          }
+          if(price){
+            setPriceError(false);
+          }
+          if(title.trim()){
+            fetch("http://localhost:3100/mydata", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ price, title }),
+  
+            }).then(()=>{
+              navigate('/')
+            })
+          }
+          
         }}
         sx={{ mt: "22px" }}
         variant="contained"
