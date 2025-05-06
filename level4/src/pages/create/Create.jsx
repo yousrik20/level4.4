@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { purple } from "@mui/material/colors";
 import { ChevronRight } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -13,20 +14,46 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 export default function Create() {
-  const [title, setTitle] = useState("");
-  const [titleError, setTitleError] = useState(false);
+  // const [title, setTitle] = useState("");
 
-  const [price, setPrice] = useState(0);
-  const [priceError, setPriceError] = useState(false);
-  
-  const navigate=useNavigate();
+  // const [price, setPrice] = useState(0);
+
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = ({ title, price }) => {
+    console.log({ price, title });
+    price=Number(price);
+    fetch("http://localhost:3100/mydata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ price, title }),
+    }).then(() => {
+      navigate("/");
+    });
+  };
   return (
-    <Box noValidate autoComplete="off" component="form" sx={{ width: "380px" }}>
+    <Box
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      autoComplete="off"
+      component="form"
+      sx={{ width: "380px" }}
+    >
       <TextField
-      error={titleError}
-        onChange={(eo) => {
-          setTitle(eo.target.value);
-        }}
+        {...register("title", {
+          required: { value: true, message: "Required Field" },
+          minLength: { value: 3, message: "Minumm length 3" },
+        })}
+        // onChange={(eo) => {
+        //   setTitle(eo.target.value);
+        // }}
         fullWidth
         label=" Transaction Title"
         sx={{ mt: "22px", display: "block" }}
@@ -38,12 +65,14 @@ export default function Create() {
           },
         }}
         variant="filled"
+        error={Boolean(errors.title)}
+        helperText={Boolean(errors.title) ? errors.title.message.toString() : null}
       />
       <TextField
-      error={priceError}
-        onChange={(eo) => {
-          setPrice(Number(eo.target.value));
-        }}
+        {...register("price", {required:{value: true, message: "Required Field"  }})}
+        // onChange={(eo) => {
+        //   setPrice(Number(eo.target.value));
+        // }}
         fullWidth
         label=" Transaction Amount"
         id="filled-start-adornment"
@@ -55,31 +84,12 @@ export default function Create() {
         }}
         variant="filled"
         type="number"
+        error={Boolean(errors.price)}
+        helperText={Boolean(errors.price) ? errors.title?.message.toString() : null}
       />
       <ColorButton
-        onClick={() => {
-          setTitleError(true);
-          setPriceError(true);
-          if(title){
-            setTitleError(false);
-          }
-          if(price){
-            setPriceError(false);
-          }
-          if(title.trim()){
-            fetch("http://localhost:3100/mydata", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ price, title }),
-  
-            }).then(()=>{
-              navigate('/')
-            })
-          }
-          
-        }}
+        type="submit"
+        onClick={() => {}}
         sx={{ mt: "22px" }}
         variant="contained"
       >
